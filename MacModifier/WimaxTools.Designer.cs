@@ -52,9 +52,9 @@
             // 
             // txtResponse
             // 
-            this.txtResponse.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtResponse.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtResponse.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtResponse.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtResponse.Location = new System.Drawing.Point(9, 47);
@@ -100,7 +100,7 @@
             this.toolStripSplitButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButton1.Name = "toolStripSplitButton1";
-            this.toolStripSplitButton1.Size = new System.Drawing.Size(112, 36);
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(117, 36);
             this.toolStripSplitButton1.Text = "Display Info";
             // 
             // btnCmdDisplay
@@ -108,7 +108,7 @@
             this.btnCmdDisplay.Image = ((System.Drawing.Image)(resources.GetObject("btnCmdDisplay.Image")));
             this.btnCmdDisplay.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnCmdDisplay.Name = "btnCmdDisplay";
-            this.btnCmdDisplay.Size = new System.Drawing.Size(193, 38);
+            this.btnCmdDisplay.Size = new System.Drawing.Size(194, 38);
             this.btnCmdDisplay.Text = "Basic Configuration";
             this.btnCmdDisplay.Click += new System.EventHandler(this.btnCmdDisplay_Click);
             // 
@@ -117,7 +117,7 @@
             this.btnSignal.Image = ((System.Drawing.Image)(resources.GetObject("btnSignal.Image")));
             this.btnSignal.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnSignal.Name = "btnSignal";
-            this.btnSignal.Size = new System.Drawing.Size(193, 38);
+            this.btnSignal.Size = new System.Drawing.Size(194, 38);
             this.btnSignal.Text = "Signal Strength";
             this.btnSignal.Click += new System.EventHandler(this.btnSignal_Click);
             // 
@@ -126,7 +126,7 @@
             this.btnNetwork.Image = ((System.Drawing.Image)(resources.GetObject("btnNetwork.Image")));
             this.btnNetwork.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnNetwork.Name = "btnNetwork";
-            this.btnNetwork.Size = new System.Drawing.Size(193, 38);
+            this.btnNetwork.Size = new System.Drawing.Size(194, 38);
             this.btnNetwork.Text = "Network Adapter";
             this.btnNetwork.Click += new System.EventHandler(this.btnNetwork_Click_1);
             // 
@@ -135,7 +135,7 @@
             this.btnModSerMac.Image = ((System.Drawing.Image)(resources.GetObject("btnModSerMac.Image")));
             this.btnModSerMac.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnModSerMac.Name = "btnModSerMac";
-            this.btnModSerMac.Size = new System.Drawing.Size(193, 38);
+            this.btnModSerMac.Size = new System.Drawing.Size(194, 38);
             this.btnModSerMac.Text = "Modem Serial/Mac";
             this.btnModSerMac.Click += new System.EventHandler(this.btnModSerMac_Click);
             // 
@@ -150,7 +150,7 @@
             this.btnChangeMac.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnChangeMac.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnChangeMac.Name = "btnChangeMac";
-            this.btnChangeMac.Size = new System.Drawing.Size(102, 36);
+            this.btnChangeMac.Size = new System.Drawing.Size(110, 36);
             this.btnChangeMac.Text = "Change Mac";
             this.btnChangeMac.Click += new System.EventHandler(this.btnChangeMac_Click);
             // 
@@ -165,7 +165,7 @@
             this.btnChangeSerial.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnChangeSerial.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnChangeSerial.Name = "btnChangeSerial";
-            this.btnChangeSerial.Size = new System.Drawing.Size(109, 36);
+            this.btnChangeSerial.Size = new System.Drawing.Size(115, 36);
             this.btnChangeSerial.Text = "Change Serial";
             this.btnChangeSerial.Click += new System.EventHandler(this.btnChangeSerial_Click);
             // 
@@ -181,14 +181,14 @@
             this.toolStripDropDownButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(112, 28);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(118, 28);
             this.toolStripDropDownButton1.Text = "Open Browser";
             // 
             // webBrowserContextMenu1
             // 
             this.webBrowserContextMenu1.Name = "webBrowserContextMenu1";
             this.webBrowserContextMenu1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.webBrowserContextMenu1.Size = new System.Drawing.Size(135, 26);
+            this.webBrowserContextMenu1.Size = new System.Drawing.Size(179, 26);
             this.webBrowserContextMenu1.Url = null;
             // 
             // statusStrip1
@@ -206,7 +206,7 @@
             // 
             this.lblStatus.Image = global::MacModifier.Properties.Resources.typedef_public;
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(66, 17);
+            this.lblStatus.Size = new System.Drawing.Size(64, 17);
             this.lblStatus.Text = "Ready...";
             // 
             // WimaxTools

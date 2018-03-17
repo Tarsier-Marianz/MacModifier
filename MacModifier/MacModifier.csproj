@@ -82,6 +82,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command.cs" />
+    <Compile Include="Constants\AuthVars.cs" />
     <Compile Include="Conversions.cs" />
     <Compile Include="MacModifierForm.cs">
       <SubType>Form</SubType>
