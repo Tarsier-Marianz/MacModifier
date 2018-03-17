@@ -82,9 +82,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command.cs" />
+    <Compile Include="Constants\Command.cs" />
     <Compile Include="Constants\AuthVars.cs" />
-    <Compile Include="Conversions.cs" />
+    <Compile Include="Data\Conversions.cs" />
     <Compile Include="MacModifierForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,7 +105,7 @@
     <Compile Include="SerialModifierForm.Designer.cs">
       <DependentUpon>SerialModifierForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TelnetInterface.cs" />
+    <Compile Include="Helpers\TelnetInterface.cs" />
     <Compile Include="WimaxTools.cs">
       <SubType>Form</SubType>
     </Compile>

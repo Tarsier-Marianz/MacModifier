@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Net.Sockets;
 
-namespace MacModifier
-{
-    enum Verbs
-    {
+namespace MacModifier {
+    enum Verbs {
         WILL = 251,
         WONT = 252,
         DO = 253,
@@ -15,25 +13,21 @@ namespace MacModifier
         IAC = 255
     }
 
-    enum Options
-    {
+    enum Options {
         SGA = 3
     }
 
-    class TelnetConnection
-    {
+    class TelnetConnection {
         TcpClient tcpSocket;
 
         int TimeOutMs = 100;
 
-        public TelnetConnection(string Hostname, int Port)
-        {
+        public TelnetConnection(string Hostname, int Port) {
             tcpSocket = new TcpClient(Hostname, Port);
 
         }
 
-        public string Login(string Username, string Password, int LoginTimeOutMs)
-        {
+        public string Login(string Username, string Password, int LoginTimeOutMs) {
             int oldTimeOutMs = TimeOutMs;
             TimeOutMs = LoginTimeOutMs;
             string s = Read();
@@ -51,50 +45,41 @@ namespace MacModifier
             return s;
         }
 
-        public void WriteLine(string cmd)
-        {
+        public void WriteLine(string cmd) {
             Write(cmd + "\n");
         }
 
-        public void Write(string cmd)
-        {
-            if (!tcpSocket.Connected) return;
+        public void Write(string cmd) {
+            if(!tcpSocket.Connected) return;
             byte[] buf = System.Text.ASCIIEncoding.ASCII.GetBytes(cmd.Replace("\0xFF", "\0xFF\0xFF"));
             tcpSocket.GetStream().Write(buf, 0, buf.Length);
         }
 
-        public string Read()
-        {
-            if (!tcpSocket.Connected) return null;
+        public string Read() {
+            if(!tcpSocket.Connected) return null;
             StringBuilder sb = new StringBuilder();
-            do
-            {
+            do {
                 ParseTelnet(sb);
                 System.Threading.Thread.Sleep(TimeOutMs);
-            } while (tcpSocket.Available > 0);
+            } while(tcpSocket.Available > 0);
             return sb.ToString();
         }
 
-        public bool IsConnected
-        {
+        public bool IsConnected {
             get { return tcpSocket.Connected; }
         }
 
-        void ParseTelnet(StringBuilder sb)
-        {
-            while (tcpSocket.Available > 0)
-            {
+        void ParseTelnet(StringBuilder sb) {
+            while(tcpSocket.Available > 0) {
                 int input = tcpSocket.GetStream().ReadByte();
-                switch (input)
-                {
+                switch(input) {
                     case -1:
                         break;
                     case (int)Verbs.IAC:
                         // interpret as command
                         int inputverb = tcpSocket.GetStream().ReadByte();
-                        if (inputverb == -1) break;
-                        switch (inputverb)
-                        {
+                        if(inputverb == -1) break;
+                        switch(inputverb) {
                             case (int)Verbs.IAC:
                                 //literal IAC = 255 escaped, so append char 255 to string
                                 sb.Append(inputverb);
@@ -105,9 +90,9 @@ namespace MacModifier
                             case (int)Verbs.WONT:
                                 // reply to all commands with "WONT", unless it is SGA (suppres go ahead)
                                 int inputoption = tcpSocket.GetStream().ReadByte();
-                                if (inputoption == -1) break;
+                                if(inputoption == -1) break;
                                 tcpSocket.GetStream().WriteByte((byte)Verbs.IAC);
-                                if (inputoption == (int)Options.SGA)
+                                if(inputoption == (int)Options.SGA)
                                     tcpSocket.GetStream().WriteByte(inputverb == (int)Verbs.DO ? (byte)Verbs.WILL : (byte)Verbs.DO);
                                 else
                                     tcpSocket.GetStream().WriteByte(inputverb == (int)Verbs.DO ? (byte)Verbs.WONT : (byte)Verbs.DONT);
