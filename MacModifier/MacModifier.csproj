@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="Constants\Command.cs" />
     <Compile Include="Constants\AuthVars.cs" />
+    <Compile Include="Constants\Response.cs" />
     <Compile Include="Data\Conversions.cs" />
     <Compile Include="Forms\MacModifierForm.cs">
       <SubType>Form</SubType>
@@ -97,6 +98,7 @@
     <Compile Include="Controls\MacTextbox.Designer.cs">
       <DependentUpon>MacTextbox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\MacExtractor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Forms\SerialModifierForm.cs">
@@ -106,6 +108,7 @@
       <DependentUpon>SerialModifierForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\TelnetInterface.cs" />
+    <Compile Include="Validator.cs" />
     <Compile Include="WimaxTools.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -1,4 +1,5 @@
-﻿using MacModifier.Properties;
+﻿using MacModifier.Helpers;
+using MacModifier.Properties;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -7,6 +8,7 @@ namespace MacModifier {
     public partial class WimaxTools : Form {
         private TelnetConnection tc = null;
         private string response = string.Empty;
+        private string macAddress = string.Empty;
         private bool isConnected = false;
 
         public WimaxTools() {
@@ -51,7 +53,6 @@ namespace MacModifier {
                 Cursor.Current = Cursors.Default;
             }
         }
-
         void btnCmdDisplay_Click(object sender, EventArgs e) {
             txtResponse.Text = String.Empty;
             try {
@@ -88,15 +89,6 @@ namespace MacModifier {
             }
         }
 
-        void btnChangeMac_Click(object sender, EventArgs e) {
-            MacModifierForm macMod = new MacModifierForm();
-            macMod.ShowDialog();
-        }
-
-        void btnChangeSerial_Click(object sender, EventArgs e) {
-            SerialModifierForm serMod = new SerialModifierForm();
-            serMod.ShowDialog();
-        }
         
         private void btnModSerMac_Click(object sender, EventArgs e) {
             txtResponse.Text = String.Empty;
@@ -108,7 +100,9 @@ namespace MacModifier {
                     tc.WriteLine(Command.DisplaySerial);
                     txtResponse.AppendText(tc.Read());
                     tc.WriteLine(Command.DisplayMAC);
-                    txtResponse.AppendText(tc.Read());
+                    string macResponse = tc.Read();
+                    txtResponse.AppendText(macResponse);
+                    macAddress = MacExtractor.GetMac(macResponse);
                     SetResponseOK("Modem Serial - Mac");
                 } else {
                     SetConnection(false);
@@ -120,7 +114,20 @@ namespace MacModifier {
                 Cursor.Current = Cursors.Default;
             }
         }
-
+        void btnChangeMac_Click(object sender, EventArgs e) {
+            if(string.IsNullOrEmpty(macAddress)) {
+                SetErrorStatus("Cannot change MAC. Please make sure you are connected to modem.", true);
+            } else {
+                using(MacModifierForm macMod = new MacModifierForm(macAddress)) {
+                    macMod.ShowDialog();
+                }
+            }
+        }
+        void btnChangeSerial_Click(object sender, EventArgs e) {
+            using(SerialModifierForm serMod = new SerialModifierForm()) {
+                serMod.ShowDialog();
+            }
+        }
         private void SetConnection(bool connection) {
             if(connection) {
                 txtResponse.ForeColor = Color.DarkGreen;
