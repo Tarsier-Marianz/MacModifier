@@ -20,6 +20,7 @@ namespace MacModifier {
         private void InitializeTelnet() {
             Cursor.Current = Cursors.WaitCursor;
             try {
+
                 tc = new TelnetConnection(AuthVars.HOSTNAME, AuthVars.PORT);
                 response = tc.Login(AuthVars.USERNAME, AuthVars.PASSWORD, AuthVars.TIMEOUT);
                 string prompt = response.TrimEnd();
@@ -41,9 +42,9 @@ namespace MacModifier {
                     txtResponse.AppendText(Environment.NewLine);
                     txtResponse.AppendText("Version : v.1.0.0");
                     txtResponse.AppendText(Environment.NewLine);
-                    txtResponse.AppendText("Copyright © MarianzK®™. 2012");
+                    txtResponse.AppendText("Copyright © MarianzK®. 2012");
                     txtResponse.AppendText(Environment.NewLine);
-                    txtResponse.AppendText("All Rights Reserved™. 2012");
+                    txtResponse.AppendText("All Rights Reserved. 2012");
                     SetConnection(true);
                 } else {
                     SetConnection(false);
@@ -90,7 +91,7 @@ namespace MacModifier {
             }
         }
 
-        
+
         private void btnModSerMac_Click(object sender, EventArgs e) {
             txtResponse.Text = String.Empty;
             try {

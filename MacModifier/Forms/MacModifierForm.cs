@@ -26,7 +26,6 @@ namespace MacModifier {
                 txtCurMac.Text = "<Unknown>";
                 lblStatus.Text = "      Exception Error!";
                 lblStatus.ForeColor = Color.Red;
-
             }
             Cursor.Current = Cursors.Default;
         }
