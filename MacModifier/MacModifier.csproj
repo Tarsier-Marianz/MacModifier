@@ -85,24 +85,24 @@
     <Compile Include="Constants\Command.cs" />
     <Compile Include="Constants\AuthVars.cs" />
     <Compile Include="Data\Conversions.cs" />
-    <Compile Include="MacModifierForm.cs">
+    <Compile Include="Forms\MacModifierForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MacModifierForm.Designer.cs">
+    <Compile Include="Forms\MacModifierForm.Designer.cs">
       <DependentUpon>MacModifierForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MacTextbox.cs">
+    <Compile Include="Controls\MacTextbox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MacTextbox.Designer.cs">
+    <Compile Include="Controls\MacTextbox.Designer.cs">
       <DependentUpon>MacTextbox.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SerialModifierForm.cs">
+    <Compile Include="Forms\SerialModifierForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SerialModifierForm.Designer.cs">
+    <Compile Include="Forms\SerialModifierForm.Designer.cs">
       <DependentUpon>SerialModifierForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\TelnetInterface.cs" />
@@ -112,10 +112,10 @@
     <Compile Include="WimaxTools.Designer.cs">
       <DependentUpon>WimaxTools.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="MacModifierForm.resx">
+    <EmbeddedResource Include="Forms\MacModifierForm.resx">
       <DependentUpon>MacModifierForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MacTextbox.resx">
+    <EmbeddedResource Include="Controls\MacTextbox.resx">
       <DependentUpon>MacTextbox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -128,7 +128,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SerialModifierForm.resx">
+    <EmbeddedResource Include="Forms\SerialModifierForm.resx">
       <DependentUpon>SerialModifierForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WimaxTools.resx">

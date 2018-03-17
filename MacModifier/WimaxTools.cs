@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using MacModifier.Properties;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace MacModifier {
     public partial class WimaxTools : Form {
+        private TelnetConnection tc = null;
+        private string response = string.Empty;
+        private bool isConnected = false;
 
         public WimaxTools() {
             InitializeComponent();
@@ -16,19 +15,17 @@ namespace MacModifier {
         }
 
         private void InitializeTelnet() {
+            Cursor.Current = Cursors.WaitCursor;
             try {
-                TelnetConnection tc = new TelnetConnection("192.168.1.1", 23);
-
-                string s = tc.Login("wimax", "wimax820", 100);
-
-                string prompt = s.TrimEnd();
-                prompt = s.Substring(prompt.Length - 1, 1);
+                tc = new TelnetConnection(AuthVars.HOSTNAME, AuthVars.PORT);
+                response = tc.Login(AuthVars.USERNAME, AuthVars.PASSWORD, AuthVars.TIMEOUT);
+                string prompt = response.TrimEnd();
+                prompt = response.Substring(prompt.Length - 1, 1);
                 if(prompt != "$" && prompt != ">")
                     throw new Exception("Connection failed");
 
-                prompt = "";
-
-                if(s != "") {
+                prompt = string.Empty;
+                if(!string.IsNullOrEmpty(response)) {
                     txtResponse.AppendText("Initializing completed..." + Environment.NewLine);
                     txtResponse.AppendText("Connected...");
                     txtResponse.AppendText(Environment.NewLine);
@@ -44,97 +41,51 @@ namespace MacModifier {
                     txtResponse.AppendText("Copyright © MarianzK®™. 2012");
                     txtResponse.AppendText(Environment.NewLine);
                     txtResponse.AppendText("All Rights Reserved™. 2012");
-                    this.lblStatus.Image = global::MacModifier.Properties.Resources.typedef_public;
-                    this.lblStatus.Text = "Connected.";
-                    this.lblStatus.ForeColor = Color.Black;
-                    txtResponse.ForeColor = Color.Black;
-
-
-
+                    SetConnection(true);
                 } else {
-                    txtResponse.Text = "Connection failed..." + Environment.NewLine + "\nDisconnected...";
-                    txtResponse.ForeColor = Color.Red;
-                    this.lblStatus.Image = global::MacModifier.Properties.Resources.typedef_private;
-                    this.lblStatus.Text = "Disconnected.";
-                    this.lblStatus.ForeColor = Color.Red;
-
+                    SetConnection(false);
                 }
             } catch {
-                this.lblStatus.Image = global::MacModifier.Properties.Resources.typedef_private;
-                this.lblStatus.Text = "Error in connecting the wimax.";
-                txtResponse.Text = "Error in connecting the wimax.";
-                txtResponse.ForeColor = Color.Red;
-                this.lblStatus.ForeColor = Color.Red;
-
-
+                SetErrorStatus("Error in connecting the wimax.", true);
+            } finally {
+                Cursor.Current = Cursors.Default;
             }
-
-
         }
 
         void btnCmdDisplay_Click(object sender, EventArgs e) {
             txtResponse.Text = String.Empty;
-
             try {
                 Cursor.Current = Cursors.WaitCursor;
-
-                TelnetConnection tc = new TelnetConnection(AuthVars.HOSTNAME, AuthVars.PORT);
-
-                string s = tc.Login(AuthVars.USERNAME, AuthVars.PASSWORD, AuthVars.TIMEOUT);
-
-                string prompt = s.TrimEnd();
-                prompt = s.Substring(prompt.Length - 1, 1);
-                if(prompt != "$" && prompt != ">")
-                    throw new Exception("Connection failed");
-
-                tc.WriteLine(Command.BasicConfig);
-                txtResponse.AppendText(tc.Read());
-                txtResponse.ForeColor = Color.Black;
-                this.lblStatus.ForeColor = Color.Black;
-                lblStatus.Text = "Basic Configuration.";
-                this.lblStatus.Image = global::MacModifier.Properties.Resources.typedef_public;
+                if(tc.IsConnected) {
+                    tc.WriteLine(Command.BasicConfig);
+                    txtResponse.AppendText(tc.Read());
+                    SetResponseOK("Basic Configuration.");
+                } else {
+                    SetConnection(false);
+                }
             } catch {
-                txtResponse.Text = "Error in displaying basic configuration.";
-                this.lblStatus.Text = "Error in displaying basic configuration.";
-                txtResponse.ForeColor = Color.Red;
-                this.lblStatus.ForeColor = Color.Red;
-                this.lblStatus.Image = global::MacModifier.Properties.Resources.typedef_private;
-
-
+                SetErrorStatus("Error in displaying basic configuration.", true);
+            } finally {
+                Cursor.Current = Cursors.Default;
             }
-            Cursor.Current = Cursors.Default;
         }
 
         void btnSignal_Click(object sender, EventArgs e) {
+            txtResponse.Text = String.Empty;
             try {
                 Cursor.Current = Cursors.WaitCursor;
-
-                txtResponse.Text = String.Empty;
-
-                TelnetConnection tc = new TelnetConnection(AuthVars.HOSTNAME, AuthVars.PORT);
-
-                string s = tc.Login(AuthVars.USERNAME, AuthVars.PASSWORD, AuthVars.TIMEOUT);
-
-                string prompt = s.TrimEnd();
-                prompt = s.Substring(prompt.Length - 1, 1);
-                if(prompt != "$" && prompt != ">")
-                    throw new Exception("Connection failed");
-
-                tc.WriteLine("cmd showssp");
-                txtResponse.AppendText(tc.Read());
-                txtResponse.ForeColor = Color.Black;
-                this.lblStatus.ForeColor = Color.Black;
-                lblStatus.Text = "Signal Strength.";
-                this.lblStatus.Image = global::MacModifier.Properties.Resources.typedef_public;
+                if(tc.IsConnected) {
+                    tc.WriteLine(Command.SignalStrength);
+                    txtResponse.AppendText(tc.Read());
+                    SetResponseOK("Signal Strength");
+                } else {
+                    SetConnection(false);
+                }
             } catch {
-                txtResponse.Text = "Error in displaying subscriber station.";
-                this.lblStatus.Text = "Error in displaying subscriber station.";
-                txtResponse.ForeColor = Color.Red;
-                this.lblStatus.ForeColor = Color.Red;
-                this.lblStatus.Image = global::MacModifier.Properties.Resources.typedef_private;
-
+                SetErrorStatus("Error in displaying subscriber station.", true);
+            } finally {
+                Cursor.Current = Cursors.Default;
             }
-            Cursor.Current = Cursors.Default;
         }
 
         void btnChangeMac_Click(object sender, EventArgs e) {
@@ -146,48 +97,59 @@ namespace MacModifier {
             SerialModifierForm serMod = new SerialModifierForm();
             serMod.ShowDialog();
         }
-
-        void btnNetwork_Click(object sender, EventArgs e) {
-
-        }
-
-        private void btnNetwork_Click_1(object sender, EventArgs e) {
-
-        }
-
+        
         private void btnModSerMac_Click(object sender, EventArgs e) {
+            txtResponse.Text = String.Empty;
             try {
                 Cursor.Current = Cursors.WaitCursor;
+                if(tc.IsConnected) {
+                    tc.WriteLine(Command.OpenShell);
+                    txtResponse.AppendText(tc.Read());
+                    tc.WriteLine(Command.DisplaySerial);
+                    txtResponse.AppendText(tc.Read());
+                    tc.WriteLine(Command.DisplayMAC);
+                    txtResponse.AppendText(tc.Read());
+                    SetResponseOK("Modem Serial - Mac");
+                } else {
+                    SetConnection(false);
+                }
 
-                txtResponse.Text = String.Empty;
-
-                TelnetConnection tc = new TelnetConnection(AuthVars.HOSTNAME, AuthVars.PORT);
-
-                string s = tc.Login(AuthVars.USERNAME, AuthVars.PASSWORD, AuthVars.TIMEOUT);
-
-                string prompt = s.TrimEnd();
-                prompt = s.Substring(prompt.Length - 1, 1);
-                if(prompt != "$" && prompt != ">")
-                    throw new Exception("Connection failed");
-
-                tc.WriteLine(Command.OpenShell);
-                txtResponse.AppendText(tc.Read());
-                tc.WriteLine(Command.DisplaySerial);
-                txtResponse.AppendText(tc.Read());
-                tc.WriteLine(Command.DisplayMAC);
-                txtResponse.AppendText(tc.Read());
-                txtResponse.ForeColor = Color.Black;
-                this.lblStatus.ForeColor = Color.Black;
-                lblStatus.Text = "Modem Serial - Mac";
-                this.lblStatus.Image = global::MacModifier.Properties.Resources.typedef_public;
             } catch {
-                txtResponse.Text = "Error in displaying serial /mac.";
-                this.lblStatus.Text = "Error in displaying serial /mac.";
-                txtResponse.ForeColor = Color.Red;
-                this.lblStatus.ForeColor = Color.Red;
-                this.lblStatus.Image = global::MacModifier.Properties.Resources.typedef_private;
+                SetErrorStatus("Error in displaying serial /mac.", true);
+            } finally {
+                Cursor.Current = Cursors.Default;
             }
-            Cursor.Current = Cursors.Default;
+        }
+
+        private void SetConnection(bool connection) {
+            if(connection) {
+                txtResponse.ForeColor = Color.DarkGreen;
+                this.lblStatus.ForeColor = Color.DarkGreen;
+                lblStatus.Text = "Connected.";
+                this.lblStatus.Image = Resources.typedef_public;
+            } else {
+                txtResponse.Text = "Connection failed..." + Environment.NewLine + "\nDisconnected...";
+                txtResponse.ForeColor = Color.Red;
+                this.lblStatus.Image = Resources.typedef_private;
+                this.lblStatus.Text = "Disconnected.";
+                this.lblStatus.ForeColor = Color.Red;
+            }
+        }
+
+        private void SetErrorStatus(string message, bool displayResponse) {
+            if(displayResponse) {
+                txtResponse.Text = message;
+            }
+            this.lblStatus.Text = message;
+            txtResponse.ForeColor = Color.Red;
+            this.lblStatus.ForeColor = Color.Red;
+            this.lblStatus.Image = Resources.typedef_private;
+        }
+
+        private void SetResponseOK(string message) {
+            this.lblStatus.Text = message;
+            this.lblStatus.ForeColor = Color.Green;
+            this.lblStatus.Image = Resources.typedef_public;
         }
     }
 }

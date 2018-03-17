@@ -128,7 +128,6 @@
             this.btnNetwork.Name = "btnNetwork";
             this.btnNetwork.Size = new System.Drawing.Size(194, 38);
             this.btnNetwork.Text = "Network Adapter";
-            this.btnNetwork.Click += new System.EventHandler(this.btnNetwork_Click_1);
             // 
             // btnModSerMac
             // 
