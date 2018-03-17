@@ -68,7 +68,6 @@
             this.txtSerial.Size = new System.Drawing.Size(243, 21);
             this.txtSerial.TabIndex = 10;
             this.txtSerial.TextChanged += new System.EventHandler(this.txtSerial_TextChanged);
-            this.txtSerial.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSerial_KeyPress);
             // 
             // btnChange
             // 

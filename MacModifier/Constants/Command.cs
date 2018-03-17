@@ -8,6 +8,7 @@ namespace MacModifier {
         public const string DisplayMAC = "equipcmd macaddr display";
         public const string RestoreDefault = "restoredef";
         public const string SetMacAddFormat = "setallmacaddr {0}";
+        public const string SetSerialFormat = "setserialnum {0}";
 
 
     }

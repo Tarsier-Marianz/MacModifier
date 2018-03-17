@@ -9,6 +9,7 @@ namespace MacModifier {
         private TelnetConnection tc = null;
         private string response = string.Empty;
         private string macAddress = string.Empty;
+        private string serial = string.Empty;
         private bool isConnected = false;
 
         public WimaxTools() {
@@ -98,16 +99,19 @@ namespace MacModifier {
                     tc.WriteLine(Command.OpenShell);
                     txtResponse.AppendText(tc.Read());
                     tc.WriteLine(Command.DisplaySerial);
-                    txtResponse.AppendText(tc.Read());
+                    string response = tc.Read();
+                    txtResponse.AppendText(response);
+                    serial = ResponseExtractor.GetSerial(response);
+
                     tc.WriteLine(Command.DisplayMAC);
-                    string macResponse = tc.Read();
-                    txtResponse.AppendText(macResponse);
-                    macAddress = MacExtractor.GetMac(macResponse);
+                    response = tc.Read();
+                    txtResponse.AppendText(response);
+                    macAddress = ResponseExtractor.GetMac(response);
+
                     SetResponseOK("Modem Serial - Mac");
                 } else {
                     SetConnection(false);
                 }
-
             } catch {
                 SetErrorStatus("Error in displaying serial /mac.", true);
             } finally {
@@ -124,8 +128,12 @@ namespace MacModifier {
             }
         }
         void btnChangeSerial_Click(object sender, EventArgs e) {
-            using(SerialModifierForm serMod = new SerialModifierForm()) {
-                serMod.ShowDialog();
+            if(string.IsNullOrEmpty(serial)) {
+                SetErrorStatus("Cannot change Serial Number. Please make sure you are connected to modem.", true);
+            } else {
+                using(SerialModifierForm serMod = new SerialModifierForm(serial)) {
+                    serMod.ShowDialog();
+                }
             }
         }
         private void SetConnection(bool connection) {
